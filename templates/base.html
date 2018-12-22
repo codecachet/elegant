@@ -42,6 +42,9 @@
         <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/custom.css" media="screen">
         {% endif %}
         {% endblock head_links %}
+
+        <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
         {% include '_includes/favicon_links.html' %}
         {% block feed_links %}
         {% include '_includes/feeds.html' %}
@@ -61,13 +64,17 @@
                     <a class="brand" href="{{ SITEURL }}/"><span class=site-name>{{ SITENAME }}</span></a>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right top-menu">
+                            {% if DISPLAY_HOME_MENU_BUTTON %}
                             <li {% if page_name == 'index' %} class="active"{% endif %}><a href="{{ SITEURL }}">Home</a></li>
+                            {% endif %}
                             {% if DISPLAY_PAGES_ON_MENU %}
                             {% for p in pages %}
                             <li {% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
                             {% endfor %}
                             {% endif %}
+                            {% if DISPLAY_CATEGORIES_MENU_BUTTON %}
                             <li {% if page_name == 'categories' %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ CATEGORIES_URL|default('categories') }}">Categories</a></li>
+                            {% endif %}
                             <li {% if page_name == 'tags' %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ TAGS_URL|default('tags') }}">Tags</a></li>
                             <li {% if page_name == 'archives' %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ ARCHIVES_URL|default('archives') }}">Archives</a></li>
                             <li><form class="navbar-search" action="{{ SITEURL }}/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>

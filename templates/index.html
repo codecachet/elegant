@@ -54,6 +54,20 @@
 
             </header>
             <div class="article-content">
+                {# pages = {{ hidden_pages }}<br> #}
+                {% for p in hidden_pages %}
+                
+                {#
+                <p>this be a page</p>
+                <p>locals = {{ p.__dir__() }}</p>
+                <p>{{ p.title }} </p>
+                #}
+                {% if p.title == 'about_site' %}
+                    <p> {{ p.content }} </p>
+                {% endif %}
+                {% endfor %}
+
+                {#
               <p>
                 <img src="../images/python_icon.png" alt="drawing" width="200" style="float:left; border:none"/>
 We are on an exploration to make people's lives easier and more
@@ -62,7 +76,8 @@ fun with programming in Python!</p>
   bit of knowledge and practice, we can take these tools to the next level.
 </p>
 <p>Come join us! The water is fine, and we'll have a great time! </p>
-
+            #}
+            
             </div>
         </div>
         {% endif %}

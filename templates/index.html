@@ -34,26 +34,21 @@
 {% from '_includes/_defaults.html' import PROJECTS with context %}
 {% set ns = namespace(snip_page = 0) %}
 <div class="row-fluid">
-    LANDING_PAGE_ABOUT_SNIPPET = {{LANDING_PAGE_ABOUT.snippet}}
+    {# LANDING_PAGE_ABOUT_SNIPPET = {{LANDING_PAGE_ABOUT.snippet}} #}
     {% if LANDING_PAGE_ABOUT and LANDING_PAGE_ABOUT.snippet %}
         {% set css_class = 'span10 offset2' %}
         {% if PROJECTS and LANDING_PAGE_ABOUT %}
             {% set css_class = 'span12' %}
         {% endif %}
-
-        
-
         {% for p in hidden_pages %}
-            p.snippet = {{p.snippet}} <br>
+            {# p.snippet = {{p.snippet}} <br> #}
             {% if p.snippet and (p.snippet == LANDING_PAGE_ABOUT.snippet) %}
-               EQUAL so setting snip_page <br>
+               {# EQUAL so setting snip_page <br> #}
                 {% set ns.snip_page = p %} 
-                in loop, snip_page={{ns.snip_page}} <br>
+                {# in loop, snip_page={{ns.snip_page}} <br> #}
             {% endif %}
         {% endfor %}
-    
-        snip_page = {{ns.snip_page}}
-
+        {# snip_page = {{ns.snip_page}} #}
     <header class="page-header {{css_class}}">
     <h1><a href="{{ SITEURL }}">{{ ns.snip_page.title }}</a></h1>
     </header>
@@ -66,25 +61,10 @@
                 {% set css_class = 'span8' %}
             {% endif %}
         <div class="{{css_class}}">
-            <header>
-            </header>
             <div class="article-content">
             {% if ns.snip_page %}
             <p> {{ ns.snip_page.content }} </p>
-                {# pages = {{ hidden_pages }}<br> #}
-            {% endif %}
-
-                {#
-              <p>
-                <img src="../images/python_icon.png" alt="drawing" width="200" style="float:left; border:none"/>
-We are on an exploration to make people's lives easier and more
-fun with programming in Python!</p>
-<p>Computers are tools. They can be frustrating a lot of the time. But with a little
-  bit of knowledge and practice, we can take these tools to the next level.
-</p>
-<p>Come join us! The water is fine, and we'll have a great time! </p>
-            #}
-            
+            {% endif %}   
             </div>
         </div>
         {% endif %}

@@ -32,40 +32,47 @@
 {% block content %}
 {% from '_includes/_defaults.html' import LANDING_PAGE_ABOUT with context %}
 {% from '_includes/_defaults.html' import PROJECTS with context %}
+{% set ns = namespace(snip_page = 0) %}
 <div class="row-fluid">
-    {% if LANDING_PAGE_ABOUT and LANDING_PAGE_ABOUT.title %}
-    {% set css_class = 'span10 offset2' %}
-    {% if PROJECTS and LANDING_PAGE_ABOUT %}
-    {% set css_class = 'span12' %}
-    {% endif %}
+    LANDING_PAGE_ABOUT_SNIPPET = {{LANDING_PAGE_ABOUT.snippet}}
+    {% if LANDING_PAGE_ABOUT and LANDING_PAGE_ABOUT.snippet %}
+        {% set css_class = 'span10 offset2' %}
+        {% if PROJECTS and LANDING_PAGE_ABOUT %}
+            {% set css_class = 'span12' %}
+        {% endif %}
+
+        
+
+        {% for p in hidden_pages %}
+            p.snippet = {{p.snippet}} <br>
+            {% if p.snippet and (p.snippet == LANDING_PAGE_ABOUT.snippet) %}
+               EQUAL so setting snip_page <br>
+                {% set ns.snip_page = p %} 
+                in loop, snip_page={{ns.snip_page}} <br>
+            {% endif %}
+        {% endfor %}
+    
+        snip_page = {{ns.snip_page}}
+
     <header class="page-header {{css_class}}">
-    <h1><a href="{{ SITEURL }}">{{ LANDING_PAGE_ABOUT.title }}</a></h1>
+    <h1><a href="{{ SITEURL }}">{{ ns.snip_page.title }}</a></h1>
     </header>
     {% endif %}
 
     <div class="row-fluid">
-        {% if LANDING_PAGE_ABOUT and LANDING_PAGE_ABOUT.details %}
-        {% set css_class = 'span8 offset2' %}
-        {% if PROJECTS and LANDING_PAGE_ABOUT %}
-        {% set css_class = 'span8' %}
-        {% endif %}
+        {% if LANDING_PAGE_ABOUT and LANDING_PAGE_ABOUT.snippet %}
+            {% set css_class = 'span8 offset2' %}
+            {% if PROJECTS and LANDING_PAGE_ABOUT %}
+                {% set css_class = 'span8' %}
+            {% endif %}
         <div class="{{css_class}}">
             <header>
-
             </header>
             <div class="article-content">
+            {% if ns.snip_page %}
+            <p> {{ ns.snip_page.content }} </p>
                 {# pages = {{ hidden_pages }}<br> #}
-                {% for p in hidden_pages %}
-                
-                {#
-                <p>this be a page</p>
-                <p>locals = {{ p.__dir__() }}</p>
-                <p>{{ p.title }} </p>
-                #}
-                {% if p.title == 'about_site' %}
-                    <p> {{ p.content }} </p>
-                {% endif %}
-                {% endfor %}
+            {% endif %}
 
                 {#
               <p>

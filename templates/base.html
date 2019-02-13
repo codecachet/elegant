@@ -66,12 +66,26 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right top-menu">
                             {% if DISPLAY_HOME_MENU_BUTTON %}
-                            <li {% if page_name == 'index' %} class="active"{% endif %}><a href="{{ SITEURL }}">Home</a></li>
+                                <li {% if page_name == 'index' %} class="active"{% endif %}><a href="{{ SITEURL }}">Home</a></li>
                             {% endif %}
                             {% if DISPLAY_PAGES_ON_MENU %}
-                            {% for p in pages %}
-                            <li {% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
-                            {% endfor %}
+                                {% if MENU_PAGE_ORDER_USE %}
+                                
+                                    {% for my_p in MENU_PAGE_ORDER %}
+                                        {% for p in pages %}
+                                        
+                                            {% if my_p == p.title %}
+                                                <li {% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% else %}
+                
+
+                                    {% for p in pages %}
+                                        <li {% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
                             {% if DISPLAY_CATEGORIES_MENU_BUTTON %}
                             <li {% if page_name == 'categories' %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ CATEGORIES_URL|default('categories') }}">Categories</a></li>

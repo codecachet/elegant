@@ -30,16 +30,24 @@
         {% endblock meta_tags_in_head %}
         <title>{% block title %}{{ SITENAME|striptags|e }}{% endblock title %}</title>
         {% block head_links %}
-        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+       
+        
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+       
         {% if 'assets' in PLUGINS %}
-        {% include '_includes/minify_css.html' with context %}
+          {% include '_includes/minify_css.html' with context %}
         {% else %}
-        <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/pygments.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/tipuesearch/tipuesearch.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/elegant.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/admonition.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/custom.css" media="screen">
+        
+
+          <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/pygments.css" media="screen">
+          {% if INCLUDE_TIPUESEARCH %}
+            <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/tipuesearch/tipuesearch.css" media="screen">
+          {% endif %}
+          <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/elegant.css" media="screen">
+          <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/admonition.css" media="screen">
+          <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/custom.css" media="screen">
         {% endif %}
         {% endblock head_links %}
 
@@ -51,8 +59,41 @@
         {% include '_includes/feeds.html' %}
         {% endblock feed_links %}
         {% include '_includes/analytics.html' %}
+        {% if DISPLAY_GOOGLE_SEARCH_BAR %}
+          {#
+          <script>
+            (function() {
+              var cx = '{{ GOOGLE_SEARCH_BAR_ID }}'; // Insert your own Custom Search engine ID here
+              var gcse = document.createElement('script'); 
+              gcse.type = 'text/javascript'; 
+              gcse.async = true;
+              gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0]; 
+              s.parentNode.insertBefore(gcse, s);
+            })();
+            </script>
+            #}
+          <script>
+              (function() {
+              var cx = '{{ GOOGLE_SEARCH_BAR_ID }}';
+              var gcse = document.createElement("script");
+              gcse.type = "text/javascript";
+              gcse.async = true;
+              gcse.src = "https://cse.google.com/cse.js?cx=" + cx;
+              var s = document.getElementsByTagName("script")[0];
+              s.parentNode.insertBefore(gcse, s);
+              })();
+              window.onload = function()
+              { 
+              var searchBox =  document.getElementById("gsc-i-id1");
+              searchBox.placeholder="Search CodeCachet";
+              searchBox.title="Search CodeCachet"; 
+              }
+            </script>
+          {% endif %}
     </head>
     <body>
+        
         <div id="content-sans-footer">
         <div class="navbar navbar-static-top">
             <div class="navbar-inner">
@@ -94,6 +135,11 @@
                             <li {% if page_name == 'archives' %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ ARCHIVES_URL|default('archives') }}">Archives</a></li>
                             {% if DISPLAY_SEARCH_BAR %}
                             <li><form class="navbar-search" action="{{ SITEURL }}/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                            {% endif %}
+                            {% if DISPLAY_GOOGLE_SEARCH_BAR %}
+                            <li class="google-search-bar">
+                                  <gcse:search></gcse:search>
+                            </li>
                             {% endif %}
                         </ul>
                     </div>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Search Results · {{ super() }}
+{% endblock title %}
+
+{% block head_description %}
+Search Results for {{ SITENAME|striptags|e }} blog.
+{% endblock head_description %}
+
+{% block meta_tags_in_head %}
+{{ super() }}
+{% endblock meta_tags_in_head %}
+
+{% block content %}
+
+<div class="row-fluid">
+   
+        <gcse:searchresults-only></gcse:searchresults-only>    
+    
+</div>
+
+{% endblock content %}

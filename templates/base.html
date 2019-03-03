@@ -138,8 +138,8 @@
                             {% endif %}
                             {% if DISPLAY_GOOGLE_SEARCH_BAR %}
                             <li class="google-search-bar">
-                                  <gcse:search></gcse:search>
-                            </li>
+                                  <gcse:searchbox-only resultsUrl="{{ SITEURL }}/pages/search-results.html"></gcse:searchbox-only>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -150,6 +150,11 @@
             <div class="row-fluid">
                 <div class="span1"></div>
                 <div class="span10">
+                  {#}
+                {% if DISPLAY_GOOGLE_SEARCH_BAR %}
+                  <gcse:searchresults></gcse:searchresults>
+                {% endif %}
+                #}
                     {% block content %}
                     {% endblock content %}
                 </div>
